@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    android:useDefaultMargins="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="tech.jpco.nazztimesheets.mainscreen.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <Button
+        android:id="@+id/minionIn"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:text="@string/sign_in"/>
+
+    <Button
+        android:id="@+id/personalIn"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:text="@string/sign_in"/>
+
+    <TextView
+        android:id="@+id/minionLabel"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_gravity="center"
+        android:text="@string/minion_time"/>
+
+    <TextView
+        android:id="@+id/personalLabel"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_gravity="center"
+        android:text="@string/personal_time"/>
+
+    <Button
+        android:id="@+id/dualOut"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill_horizontal"
+        android:text="@string/sign_out"/>
+
+    <TextView
+        android:id="@+id/minionMargin"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_gravity="center_horizontal"
+        tools:text="Ahead by 4 hours"/>
+
+    <TextView
+        android:id="@+id/personalMargin"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_gravity="center_horizontal"
+        tools:text="Ahead by 4 hours"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recordRV"
+        android:layout_columnSpan="2"
+        android:layout_rowWeight="1"
+        android:layout_height="0dp"
+        android:layout_gravity="fill"
+        tools:listitem="@layout/time_record_element"/>
+
+    <Button
+        android:id="@+id/pullSheets"
+        android:text="@string/pull_record"
+        android:layout_gravity="left"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <Button
+        android:id="@+id/pushSheets"
+        android:text="@string/push_record"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</GridLayout>
+

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Nazz Timesheets</string>
+    <string name="action_settings">Settings</string>
+    <string name="sign_in">Sign In</string>
+    <string name="minion_time">Minion Time</string>
+    <string name="personal_time">Personal Time</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="minion_tag"><![CDATA[<< Minion]]></string>
+    <string name="personal_tag"><![CDATA[Personal >>]]></string>
+    <string name="record_in">IN:</string>
+    <string name="record_out">OUT:</string>
+    <string name="pull_record">Pull Record</string>
+    <string name="push_record">Push Record</string>
+</resources>
