@@ -1,5 +1,7 @@
 package tech.jpco.nazztimesheets.model;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -7,9 +9,13 @@ import java.util.List;
  */
 
 public interface Repository {
-    interface GetLocalLogCallback{
-        void onLocalLoaded(List<WorkSession> log);
+    interface GetLogCallback {
+        void onLogLoaded(List<WorkSession> log);
     }
 
+    void getLocalLog(@NonNull GetLogCallback callback);
 
+    void addNewSession(WorkSession session);
+
+    void completeSession(WorkSession session);
 }
