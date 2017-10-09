@@ -1,5 +1,7 @@
 package tech.jpco.nazztimesheets.mainscreen;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import tech.jpco.nazztimesheets.BasePresenter;
@@ -12,10 +14,8 @@ import tech.jpco.nazztimesheets.model.WorkSession;
 
 interface MainContract {
 
-    interface View extends BaseView<Presenter>{
-        void setMinionActive();
-
-        void setPersonalActive();
+    interface View /*extends BaseView<Presenter>*/{
+        void setActive(boolean MinionIsActive);
 
         void setInactive();
 
@@ -30,10 +30,8 @@ interface MainContract {
         void setHoursEven();
     }
 
-    interface Presenter extends BasePresenter{
-        void minionSignIn();
-
-        void personalSignIn();
+    interface Presenter /*extends BasePresenter*/{
+        void signIn(@NonNull WorkSession.WorkType type);
 
         void signOut();
 

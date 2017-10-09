@@ -59,7 +59,9 @@
         android:layout_rowWeight="1"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        tools:listitem="@layout/time_record_element"/>
+        tools:listitem="@layout/time_record_element"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
     <Button
         android:id="@+id/pullSheets"

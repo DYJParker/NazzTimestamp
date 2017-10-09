@@ -18,4 +18,6 @@ public interface Repository {
     void addNewSession(WorkSession session);
 
     void completeSession(WorkSession session);
+
+    WorkSession getMostRecentSession();
 }

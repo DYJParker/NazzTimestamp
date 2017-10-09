@@ -7,12 +7,12 @@ import android.content.Context
  */
 class MyRepo : Repository {
     companion object {
-        private var sInstance: LocalDbHelper? = null
+        private var sInstance: MyRepo? = null
 
         @Synchronized
-        fun getInstance(context: Context): LocalDbHelper {
+        fun getInstance(): MyRepo {
             if (sInstance == null) {
-                sInstance = LocalDbHelper(context.applicationContext)
+                sInstance = MyRepo()
             }
             return sInstance!!
         }
@@ -22,11 +22,14 @@ class MyRepo : Repository {
     }
 
     override fun addNewSession(session: WorkSession) {
-        LocalDbHelper.
+        TODO("not implemented")
     }
 
     override fun completeSession(session: WorkSession) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun getMostRecentSession(): WorkSession {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
