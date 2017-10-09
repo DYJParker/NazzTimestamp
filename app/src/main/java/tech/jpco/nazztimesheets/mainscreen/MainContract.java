@@ -12,7 +12,7 @@ import tech.jpco.nazztimesheets.model.WorkSession;
  * Created by Dave - Work on 9/8/2017.
  */
 
-interface MainContract {
+public interface MainContract {
 
     interface View /*extends BaseView<Presenter>*/{
         void setActive(boolean MinionIsActive);

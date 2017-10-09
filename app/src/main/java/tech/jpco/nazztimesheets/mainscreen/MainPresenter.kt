@@ -3,6 +3,9 @@ package tech.jpco.nazztimesheets.mainscreen
 import tech.jpco.nazztimesheets.model.Repository
 import tech.jpco.nazztimesheets.model.WorkSession
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
+import kotlin.jvm.javaClass
 
 /**
  * Created by Dave - Work on 9/8/2017.
@@ -55,10 +58,16 @@ class MainPresenter internal constructor(
                 (if (next.type == WorkSession.WorkType.PERSONAL) -1 else 1)})
 
         val minionFracHours = minutesToFractionalHours(minionAhead)
+        Logger.getLogger(MainPresenter::class.java.canonicalName).logp(
+                Level.INFO,
+                this::class.java.canonicalName,
+                "setAheadState",
+                "$minionFracHours"
+        )
 
         when {
-            minionFracHours > 0 -> mView.setMinionAhead(minionFracHours)
-            minionFracHours < 0 -> mView.setPersonalAhead(-minionFracHours)
+            minionFracHours > 0f -> mView.setMinionAhead(minionFracHours)
+            minionFracHours < 0f -> mView.setPersonalAhead(-minionFracHours)
             else -> mView.setHoursEven()
         }
     }

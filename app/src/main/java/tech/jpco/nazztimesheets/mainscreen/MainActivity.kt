@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
     private val mMinionButton by lazy { arrayOf(minionIn, personalLabel) }
     private val mPersonalButton by lazy { arrayOf(personalIn, minionLabel) }
     private var mDefaultColors: ColorStateList? = null
-    private var mHighlightColors: ColorStateList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
 
     }
 
-    fun TextView.setHighlighting(highlighted: Boolean){
+    private fun TextView.setHighlighting(highlighted: Boolean){
         if (mDefaultColors == null) {
             mDefaultColors = textColors
         }

@@ -1,4 +1,4 @@
-package jpco.tech.nazztimesheets;
+package tech.jpco.nazztimesheets;
 
 import org.junit.Test;
 
