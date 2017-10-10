@@ -22,6 +22,7 @@ class MainPresenter internal constructor(
         setWhichTypeActive(if(recent == null || recent.end != null) null else recent.type)
     }
 
+    //TODO sign out any active session
     override fun signIn(type: WorkSession.WorkType) {
         mRepo.addNewSession(WorkSession(Date(),type))
         setWhichTypeActive(type)
@@ -35,8 +36,8 @@ class MainPresenter internal constructor(
         }
     }
 
+    //TODO rewrite this to accommodate model of entire log
     override fun signOut() {
-        //TODO rewrite this to accommodate model of entire log
         val current = mRepo.mostRecentSession
         if (current.end != null) throw IllegalStateException()
 
@@ -48,9 +49,10 @@ class MainPresenter internal constructor(
     }
 
     override fun rvSwiped() {
-        //TODO write this later once RV is in use
+        TODO("write this later once RV is in use")
     }
 
+    //TODO check for negative times elapsed, throw error in response!
     private fun setAheadState(){
         var log: List<WorkSession> = mutableListOf()
         mRepo.getLocalLog { log = it }
@@ -58,16 +60,16 @@ class MainPresenter internal constructor(
                 (if (next.type == WorkSession.WorkType.PERSONAL) -1 else 1)})
 
         val minionFracHours = minutesToFractionalHours(minionAhead)
-        Logger.getLogger(MainPresenter::class.java.canonicalName).logp(
+        /*Logger.getLogger(MainPresenter::class.java.canonicalName).logp(
                 Level.INFO,
                 this::class.java.canonicalName,
                 "setAheadState",
                 "$minionFracHours"
-        )
+        )*/
 
         when {
-            minionFracHours > 0f -> mView.setMinionAhead(minionFracHours)
-            minionFracHours < 0f -> mView.setPersonalAhead(-minionFracHours)
+            minionFracHours > 0.0f -> mView.setMinionAhead(minionFracHours)
+            minionFracHours < 0.0f -> mView.setPersonalAhead(-minionFracHours)
             else -> mView.setHoursEven()
         }
     }
