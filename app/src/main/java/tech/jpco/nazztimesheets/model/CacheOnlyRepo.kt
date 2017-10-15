@@ -32,5 +32,11 @@ class CacheOnlyRepo : Repository {
         mCache[mCache.indexOf(target)] = session
     }
 
-    override fun getMostRecentSession(): WorkSession? = mCache.lastOrNull()
+    override fun getMostRecentSession(callback: Repository.GetRecentCallback) {
+        callback.onRecentLoaded(mCache.lastOrNull())
+    }
+
+    internal fun setCache(log: List<WorkSession>) {
+        mCache = log.toMutableList()
+    }
 }

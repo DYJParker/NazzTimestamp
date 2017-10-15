@@ -15,7 +15,7 @@ import tech.jpco.nazztimesheets.model.WorkSession;
 public interface MainContract {
 
     interface View /*extends BaseView<Presenter>*/{
-        void setActive(boolean MinionIsActive);
+        void setActive(boolean MinionIsActive, String timestamp);
 
         void setInactive();
 

@@ -1,5 +1,8 @@
 package tech.jpco.nazztimesheets.model;
 
+import android.nfc.Tag;
+import android.util.Log;
+
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -37,14 +40,14 @@ public class WorkSession {
         return mStart;
     }
 
-    public int getStartSecs() { return (int) mStart.getTime();}
+    public long getStartSecs() { return mStart.getTime();}
     //TODO rewrite this as an extension in SQL repo
 
     public Date getEnd() {
         return mEnd;
     }
 
-    public int getEndSecs() { return (int) mEnd.getTime();}
+    public long getEndSecs() { return mEnd.getTime();}
     //TODO rewrite this as an extension in SQL repo
 
     public WorkType getType(){
@@ -52,7 +55,8 @@ public class WorkSession {
     }
 
     public int minutesElapsed(){
-        if (mStart == null || mEnd == null) return 0;
+        if (mEnd == null) return 0;
+        if (mStart == null || mEnd.getTime() - mStart.getTime() < 0) throw new IllegalStateException();
         return (int) TimeUnit.MILLISECONDS.toMinutes(mEnd.getTime() - mStart.getTime());
     }
 }

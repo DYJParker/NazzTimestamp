@@ -13,11 +13,15 @@ public interface Repository {
         void onLogLoaded(List<WorkSession> log);
     }
 
+    interface GetRecentCallback{
+        void onRecentLoaded(WorkSession recent);
+    }
+
     void getLocalLog(@NonNull GetLogCallback callback);
 
     void addNewSession(WorkSession session);
 
     void completeSession(WorkSession session);
 
-    WorkSession getMostRecentSession();
+    void getMostRecentSession(@NonNull GetRecentCallback callback);
 }

@@ -4,7 +4,6 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.AdditionalMatchers
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.*
 import org.mockito.AdditionalMatchers.*
@@ -107,7 +106,7 @@ class MainPresenterTests {
         assertEquals(type, arg.value.type)
         val time = System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(10)
         assertTrue(arg.value.start.time > time
-                && arg.value.start.time < System.currentTimeMillis())
+                && arg.value.start.time <= System.currentTimeMillis())
         assertNull(arg.value.end)
     }
 

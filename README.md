@@ -6,12 +6,12 @@ So far, this app features:
   - featuring Presenter unit tests with JUnit and Mockito
 - Kotlin
   - My very first Kotlin program
-  - Anko from the folks at Kotlin for a more idiomatic SQLiteOpenDatabaseHelper
+  - Anko from the folks at Kotlin for a more idiomatic SQLiteOpenDatabaseHelper and some other utilities
 
 A not-very-strongly-ordered WIP list:
-- [ ] UI: Add "time started" text field to active category markers, reactivate menuless ToolBar
+- [X] UI: Add "time started" text field to active category markers, reactivate menuless ToolBar
 - [ ] Re-write for new WorkLog encapsulating object, and move some logic there from Presenter
-- [ ] Write Espresso (maybe look into RoboElectric?) tests
+- [ ] Write Espresso (maybe look into Robolectric?) tests
 - [ ] Activate and plumb RecyclerView for read-only session history
 - [ ] Allow editing log from RV
 - [ ] Tie in to Google Sheets API per "client" request

@@ -35,6 +35,20 @@
         android:layout_gravity="center"
         android:text="@string/personal_time"/>
 
+    <TextView
+        android:id="@+id/minionStarted"
+        android:layout_gravity="center"
+        tools:text="Started at 5pm"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/personalStarted"
+        android:layout_gravity="center"
+        tools:text="Started at 5pm"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
     <Button
         android:id="@+id/dualOut"
         android:layout_columnSpan="2"

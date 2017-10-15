@@ -6,15 +6,19 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.jetbrains.anko.toast
 
 import tech.jpco.nazztimesheets.R
-import tech.jpco.nazztimesheets.model.CacheOnlyRepo
+import tech.jpco.nazztimesheets.model.MyRepo
 import tech.jpco.nazztimesheets.model.WorkSession
 
 class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,*/ MainContract.View {
-    private val mPresenter: MainContract.Presenter by lazy { MainPresenter(this, CacheOnlyRepo()) }
+    private val mPresenter: MainContract.Presenter by lazy { MainPresenter(this, MyRepo(this)) }
     private val mMinionButton by lazy { arrayOf(minionIn, personalLabel) }
     private val mPersonalButton by lazy { arrayOf(personalIn, minionLabel) }
     private var mDefaultColors: ColorStateList? = null
@@ -22,9 +26,9 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar)
 
+        mPresenter
         minionIn.setOnClickListener { mPresenter.signIn(WorkSession.WorkType.MINION) }
         personalIn.setOnClickListener { mPresenter.signIn(WorkSession.WorkType.PERSONAL) }
         dualOut.setOnClickListener { mPresenter.signOut() }
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
 
 
         return if (id == R.id.action_settings) {
+            toast("That button doesn't do anything yet!")
             true
         } else super.onOptionsItemSelected(item)
 
@@ -58,11 +63,14 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
         else setTextColor(mDefaultColors)
     }
 
-    override fun setActive(MinionIsActive: Boolean) {
-        mMinionButton.forEach { it.isEnabled = !MinionIsActive }
-        mPersonalButton.forEach { it.isEnabled = MinionIsActive }
-        minionLabel.setHighlighting(MinionIsActive)
-        personalLabel.setHighlighting(!MinionIsActive)
+    override fun setActive(minionIsActive: Boolean, timestamp: String) {
+        mMinionButton.forEach { it.isEnabled = !minionIsActive }
+        mPersonalButton.forEach { it.isEnabled = minionIsActive }
+        personalStarted.visibility = if (minionIsActive) GONE else VISIBLE
+        minionStarted.visibility = if (minionIsActive) VISIBLE else GONE
+        (if (minionIsActive) minionStarted else personalStarted).text = timestamp
+        minionLabel.setHighlighting(minionIsActive)
+        personalLabel.setHighlighting(!minionIsActive)
         dualOut.isEnabled = true
     }
 
@@ -70,6 +78,8 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
         mMinionButton.forEach { it.isEnabled = true }
         mPersonalButton.forEach { it.isEnabled = true }
         dualOut.isEnabled = false
+        minionStarted.visibility = GONE
+        personalStarted.visibility = GONE
         minionLabel.setHighlighting(false)
         personalLabel.setHighlighting(false)
     }
