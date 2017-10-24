@@ -7,11 +7,13 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.*
 import org.mockito.AdditionalMatchers.*
+import org.mockito.ArgumentMatchers
 import org.mockito.junit.MockitoJUnitRunner
 import tech.jpco.nazztimesheets.mainscreen.MainContract
 import tech.jpco.nazztimesheets.mainscreen.MainPresenter
 import tech.jpco.nazztimesheets.model.CacheOnlyRepo
 import tech.jpco.nazztimesheets.model.Repository
+import tech.jpco.nazztimesheets.model.WorkLog
 import tech.jpco.nazztimesheets.model.WorkSession
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -23,9 +25,9 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(MockitoJUnitRunner::class)
 class MainPresenterTests {
-    val mMockView = mock(MainContract.View::class.java)
-    lateinit var mRepo: Repository
-    val mFakeDate: Calendar = Calendar.getInstance()
+    private val mMockView = mock(MainContract.View::class.java)
+    private val mRepo: CacheOnlyRepo = CacheOnlyRepo.getInstance()
+    private val mFakeDate: Calendar = Calendar.getInstance()
 
     private fun createRecord(hours: Double, type: WorkSession.WorkType): WorkSession {
         val start = mFakeDate.time
@@ -39,7 +41,7 @@ class MainPresenterTests {
 
     @Before
     fun setup() {
-        mRepo = CacheOnlyRepo()
+        mRepo.reset()
         mFakeDate.set(2017, 1, 1)
     }
 
@@ -53,7 +55,8 @@ class MainPresenterTests {
     private fun testStartupOpen(type: WorkSession.WorkType) {
         mRepo.addNewSession(createRecord(0.0, type))
         MainPresenter(mMockView, mRepo)
-        verify(mMockView).setActive(type == WorkSession.WorkType.MINION)
+        verify(mMockView).setActive(eq(type == WorkSession.WorkType.MINION),
+                ArgumentMatchers.anyString())
     }
 
     @Test
@@ -100,11 +103,14 @@ class MainPresenterTests {
     private fun testNewSession(type: WorkSession.WorkType) {
         val arg: ArgumentCaptor<WorkSession> = ArgumentCaptor.forClass(WorkSession::class.java)
         val repo = mock(Repository::class.java)
+        `when`(repo.getLocalLog(ArgumentMatchers.any(Repository.GetLogCallback::class.java)))
+                .thenAnswer { it.getArgument<Repository.GetLogCallback>(0).onLogLoaded(WorkLog()) }
         val presenter = MainPresenter(mMockView, repo)
+
         presenter.signIn(type)
         verify(repo).addNewSession(arg.capture())
         assertEquals(type, arg.value.type)
-        val time = System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(10)
+        val time = System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(1)
         assertTrue(arg.value.start.time > time
                 && arg.value.start.time <= System.currentTimeMillis())
         assertNull(arg.value.end)

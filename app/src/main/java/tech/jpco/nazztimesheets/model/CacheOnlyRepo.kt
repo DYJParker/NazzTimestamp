@@ -3,7 +3,7 @@ package tech.jpco.nazztimesheets.model
 /**
  * Created by Dave - Work on 10/8/2017.
  */
-class CacheOnlyRepo : Repository {
+class CacheOnlyRepo private constructor() : Repository {
     companion object {
         private var sInstance: CacheOnlyRepo? = null
 
@@ -16,7 +16,7 @@ class CacheOnlyRepo : Repository {
         }
     }
 
-    private var mCache: MutableList<WorkSession> = mutableListOf()
+    private var mCache = WorkLog()
 
     override fun getLocalLog(callback: Repository.GetLogCallback) {
         callback.onLogLoaded(mCache)
@@ -32,11 +32,10 @@ class CacheOnlyRepo : Repository {
         mCache[mCache.indexOf(target)] = session
     }
 
-    override fun getMostRecentSession(callback: Repository.GetRecentCallback) {
-        callback.onRecentLoaded(mCache.lastOrNull())
+    internal fun setCache(log: List<WorkSession>) {
+        mCache.clear()
+        mCache.addAll(log)
     }
 
-    internal fun setCache(log: List<WorkSession>) {
-        mCache = log.toMutableList()
-    }
+    internal fun reset() = mCache.clear()
 }

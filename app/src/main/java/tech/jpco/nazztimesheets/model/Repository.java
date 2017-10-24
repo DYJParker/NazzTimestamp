@@ -10,11 +10,7 @@ import java.util.List;
 
 public interface Repository {
     interface GetLogCallback {
-        void onLogLoaded(List<WorkSession> log);
-    }
-
-    interface GetRecentCallback{
-        void onRecentLoaded(WorkSession recent);
+        void onLogLoaded(WorkLog log);
     }
 
     void getLocalLog(@NonNull GetLogCallback callback);
@@ -22,6 +18,4 @@ public interface Repository {
     void addNewSession(WorkSession session);
 
     void completeSession(WorkSession session);
-
-    void getMostRecentSession(@NonNull GetRecentCallback callback);
 }

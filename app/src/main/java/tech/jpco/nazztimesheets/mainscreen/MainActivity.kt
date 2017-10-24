@@ -18,7 +18,7 @@ import tech.jpco.nazztimesheets.model.MyRepo
 import tech.jpco.nazztimesheets.model.WorkSession
 
 class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,*/ MainContract.View {
-    private val mPresenter: MainContract.Presenter by lazy { MainPresenter(this, MyRepo(this)) }
+    private val mPresenter: MainContract.Presenter by lazy { MainPresenter(this, MyRepo.getInstance(this)) }
     private val mMinionButton by lazy { arrayOf(minionIn, personalLabel) }
     private val mPersonalButton by lazy { arrayOf(personalIn, minionLabel) }
     private var mDefaultColors: ColorStateList? = null

@@ -1,13 +1,15 @@
 package tech.jpco.nazztimesheets.model
 
 import android.content.Context
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 /**
  * Created by Dave - Work on 10/7/2017.
  */
-class MyRepo(context: Context) : Repository {
+class MyRepo private constructor(context: Context) : Repository, AnkoLogger {
     companion object {
         private var sInstance: MyRepo? = null
 
@@ -27,46 +29,36 @@ class MyRepo(context: Context) : Repository {
     private val mCache = CacheOnlyRepo.getInstance()
 
     override fun getLocalLog(callback: Repository.GetLogCallback) {
-        var localLog: List<WorkSession> = emptyList()
+        var localLog = WorkLog()
         mCache.getLocalLog { localLog = it }
+        debug("localLog is $localLog")
         if (localLog.isNotEmpty()) {
             callback.onLogLoaded(localLog)
         } else {
             mIsQueryingDatabase = true
-//            doAsync {
+            doAsync {
                 val log = mDbHelper.getLog()
                 mCache.setCache(log)
-//                uiThread {
-                    callback.onLogLoaded(log)
+                uiThread {
+                    debug("Returned localLog is $localLog")
+                    callback.onLogLoaded(localLog)
                     mIsQueryingDatabase = false
-//                }
-//            }
+                }
+            }
         }
     }
 
     override fun addNewSession(session: WorkSession) {
         mCache.addNewSession(session)
-//        doAsync {
+        doAsync {
             mDbHelper.addSessionToDB(session)
-//        }
+        }
     }
 
     override fun completeSession(session: WorkSession) {
         mCache.completeSession(session)
-//        doAsync {
+        doAsync {
             mDbHelper.completeExSessionInDB(session)
-//        }
-    }
-
-    override fun getMostRecentSession(callback: Repository.GetRecentCallback) {
-        var localLog: List<WorkSession> = emptyList()
-//        doAsync {
-            //TODO replace this with a coroutine or a promise
-            while (mIsQueryingDatabase) { }
-            mCache.getLocalLog { localLog = it }
-//            uiThread {
-                callback.onRecentLoaded(localLog.lastOrNull())
-//            }
-//        }
+        }
     }
 }

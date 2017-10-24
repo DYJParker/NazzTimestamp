@@ -10,7 +10,7 @@ So far, this app features:
 
 A not-very-strongly-ordered WIP list:
 - [X] UI: Add "time started" text field to active category markers, reactivate menuless ToolBar
-- [ ] Re-write for new WorkLog encapsulating object, and move some logic there from Presenter
+- [X] Re-write for new WorkLog encapsulating object, and move some logic there from Presenter
 - [ ] Write Espresso (maybe look into Robolectric?) tests
 - [ ] Activate and plumb RecyclerView for read-only session history
 - [ ] Allow editing log from RV
