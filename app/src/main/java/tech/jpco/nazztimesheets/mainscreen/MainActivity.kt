@@ -85,19 +85,19 @@ class MainActivity : AppCompatActivity(), /*EasyPermissions.PermissionCallbacks,
     }
 
     override fun setRvList(log: List<WorkSession>) {
-
+        TODO("RV not implemented yet")
     }
 
     override fun notifyRvUpdated() {
-
+        TODO("RV not implemented yet")
     }
 
-    override fun setMinionAhead(hours: Float) {
+    override fun setMinionAhead(hours: String) {
         minionMargin.text = "Ahead by $hours hours"
         personalMargin.text = ""
     }
 
-    override fun setPersonalAhead(hours: Float) {
+    override fun setPersonalAhead(hours: String) {
         personalMargin.text = "Ahead by $hours hours"
         minionMargin.text = ""
     }

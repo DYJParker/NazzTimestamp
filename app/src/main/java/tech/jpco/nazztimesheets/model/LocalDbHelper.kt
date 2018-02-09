@@ -16,13 +16,13 @@ import java.util.*
 class LocalDbHelper(context: Context) :
         ManagedSQLiteOpenHelper(context, "workLog.db"), AnkoLogger {
     companion object {
-        const private val TABLE_NAME = "logged_sessions"
-        const private val COL_ID = "_id"
-        const private val COL_TYPE = "type"
-        const private val COL_START = "started"
-        const private val COL_END = "ended"
+        private const val TABLE_NAME = "logged_sessions"
+        private const val COL_ID = "_id"
+        private const val COL_TYPE = "type"
+        private const val COL_START = "started"
+        private const val COL_END = "ended"
 
-        const private val TAG = "DB"
+        private const val TAG = "DB"
 
         private var sInstance: LocalDbHelper? = null
 
@@ -75,16 +75,16 @@ class LocalDbHelper(context: Context) :
     }
 
     fun addSessionToDB(session: WorkSession) {
-        Log.d(TAG,session.startSecs.toString())
+        Log.d(TAG,session.start.time.toString())
         writableDatabase.insert(TABLE_NAME,
                 COL_TYPE to session.type.name,
-                COL_START to session.startSecs)
+                COL_START to session.start.time)
     }
 
     fun completeExSessionInDB(session: WorkSession) {
-        writableDatabase.update(TABLE_NAME, COL_END to session.endSecs)
+        writableDatabase.update(TABLE_NAME, COL_END to session.end.time)
                 .whereArgs("($COL_START = {start}) and ($COL_TYPE = {type})",
-                        "start" to session.startSecs,
+                        "start" to session.start.time,
                         "type" to session.type.name)
                 .exec()
     }

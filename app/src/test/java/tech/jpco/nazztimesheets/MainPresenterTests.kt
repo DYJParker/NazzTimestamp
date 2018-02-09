@@ -60,7 +60,7 @@ class MainPresenterTests {
     }
 
     @Test
-    fun testStartupOpeMinion() {
+    fun testStartupOpenMinion() {
         testStartupOpen(WorkSession.WorkType.MINION)
     }
 
@@ -91,13 +91,13 @@ class MainPresenterTests {
     @Test
     fun testStartupMinionAhead() {
         testStartupAheadness(WorkSession.WorkType.MINION)
-        verify(mMockView).setMinionAhead(3.5f)
+        verify(mMockView).setMinionAhead("3\u00BD")
     }
 
     @Test
     fun testStartupPersonalAhead() {
         testStartupAheadness(WorkSession.WorkType.PERSONAL)
-        verify(mMockView).setPersonalAhead(3.5f)
+        verify(mMockView).setPersonalAhead("3\u00BD")
     }
 
     private fun testNewSession(type: WorkSession.WorkType) {
@@ -136,6 +136,6 @@ class MainPresenterTests {
         val presenter = MainPresenter(mMockView, mRepo)
         presenter.signOut()
         verify(mMockView).setInactive()
-        verify(mMockView).setMinionAhead(gt(0.0f))
+        verify(mMockView).setMinionAhead(ArgumentMatchers.matches("(\\d+[\u00BC-\u00BE]?)"))
     }
 }

@@ -16,7 +16,7 @@ class CacheOnlyRepo private constructor() : Repository {
         }
     }
 
-    private var mCache = WorkLog()
+    private val mCache = WorkLog()
 
     override fun getLocalLog(callback: Repository.GetLogCallback) {
         callback.onLogLoaded(mCache)

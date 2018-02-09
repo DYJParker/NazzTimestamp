@@ -11,8 +11,6 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class WorkSession {
-    //TODO !! Create overall log, pass that from model to presenter
-
     private Date mStart, mEnd;
     private WorkType mType;
 
@@ -40,15 +38,9 @@ public class WorkSession {
         return mStart;
     }
 
-    public long getStartSecs() { return mStart.getTime();}
-    //TODO rewrite this as an extension in SQL repo
-
     public Date getEnd() {
         return mEnd;
     }
-
-    public long getEndSecs() { return mEnd.getTime();}
-    //TODO rewrite this as an extension in SQL repo
 
     public WorkType getType(){
         return mType;

@@ -23,9 +23,9 @@ public interface MainContract {
 
         void notifyRvUpdated();
 
-        void setMinionAhead(float hours);
+        void setMinionAhead(String hours);
 
-        void setPersonalAhead(float hours);
+        void setPersonalAhead(String hours);
 
         void setHoursEven();
     }
